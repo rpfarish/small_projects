@@ -10,8 +10,6 @@ wn.tracer(0)
 score_a = 0
 score_b = 0
 
-
-
 # Paddle a
 paddle_a = turtle.Turtle()
 paddle_a.speed(0)
@@ -19,8 +17,7 @@ paddle_a.shape("square")
 paddle_a.color("white")
 paddle_a.shapesize(stretch_wid=5, stretch_len=1)
 paddle_a.penup()
-paddle_a.goto(-350,0)
-
+paddle_a.goto(-350, 0)
 
 # Paddle b
 paddle_b = turtle.Turtle()
@@ -50,6 +47,7 @@ pen.penup()
 pen.hideturtle()
 pen.goto(0, 260)
 pen.write("Player A: 0  Player B: 0", align="center", font=("Courier", 24, "normal"))
+
 
 # Paddle Functions
 def paddle_a_up():
@@ -97,7 +95,7 @@ while True:
     if ball.ycor() > 290:
         ball.sety(290)
         ball.dy *= -1
- 
+
     elif ball.ycor() < -290:
         ball.sety(-290)
         ball.dy *= -1
