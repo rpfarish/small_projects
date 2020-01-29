@@ -1,10 +1,10 @@
 # Python Tutorial for Beginners [Full Course] Learn Python for Web Development
 
 # 1
-#print('Ryan Farish')
-#print("o----")
-#print(" ||||")
-#print('*' * 10)
+# print('Ryan Farish')
+# print("o----")
+# print(" ||||")
+# print('*' * 10)
 
 
 # 2
@@ -19,14 +19,14 @@ age = 20
 new_patient = True
 '''
 
-#3
+# 3
 '''
 name = input("What is your name? ")
 #print("Hi " + name)
 color = input("Enter your favorite color. ")
 print(name.capitalize() + " likes " + color.lower() + ".")
 '''
-#4
+# 4
 '''
 from datetime import datetime
 
@@ -74,7 +74,8 @@ print(course.title())
 # 8
 # Python uses order of operation
 import math
-#print(math.pi)
+
+# print(math.pi)
 # 9
 '''
 price = int(input("Enter the house price: "))
@@ -93,7 +94,7 @@ is_criminal = True
 if not is_criminal and has_good_credit:
     print("You are eligible for a loan.")
 '''
-#11 Comparision Operators
+# 11 Comparision Operators
 '''
 temp = 30
 if temp == 30:
@@ -158,6 +159,7 @@ while guess_count < guess_limit:
         break
 '''
 # 15 Car Game
+'''
 cmd = ""
 car_start = False
 car_stopped = True
@@ -187,15 +189,12 @@ while True:
         break
     else:
         print("I'm sorry I didn't understand.")
+'''
+# Import must be from .py
+from utils import pi_func
 
+pi_func()
 
-
-
-
-
-
-
-
-
-
+from shipping import calc_shipping
+calc_shipping()
 
