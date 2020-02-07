@@ -1,14 +1,38 @@
 from statistics import mean
 
+scrm = open("scrambles.txt", "r")
+
 attempts = 0
 disp_count = 1
 solves = 0
 disp_list = []
 solve_list = []
 
-
 '''for var in range(1, 30):
     print(f"30/{var} with a {30 % var} remainder")'''
+
+
+class MySolve:
+    def __init__(self, num=1, time=0, isdnf=False, scramble=""):
+        self.num = num
+        self.time = time
+        self.isdnf = isdnf
+        self.scramble = scramble
+
+    def write_out(self):
+        print(self.time, self.isdnf, self.scramble)
+
+    def solve_ip(self, num):
+        self.time, self.isdnf = input("Enter Time then If is dnf").split()
+        self.num = MySolve(self.time, self.isdnf, self.scramble)
+
+
+'''s1 = MySolve()
+s1.write_out()
+s1.solve_ip(1)
+s1.write_out()'''
+
+
 
 
 # Determines if input is a float?
@@ -79,8 +103,7 @@ while attempts < 6:
 
 save = open("solves.txt", "a")
 str1 = ', '.join(str(e) for e in disp_list)
-save.write(str1 + "\n")
-save.close()
+
 print("Solves saved to text file.")
 
 dnf_input = disp_list.count("DNF")
@@ -99,6 +122,9 @@ print("Accuracy:")
 print(solves)
 print(attempts)
 print(1 - (total_dnfs / attempts))
+str2 = str(mean(solve_list))
+save.write(str1 + " Ave: " + str2 + "\n")
+save.close()
 
 # TODO Built in stats?
 # TODO data collect/store
