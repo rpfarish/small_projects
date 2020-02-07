@@ -54,7 +54,14 @@ def print_ave():
 scrm = open("scrambles.txt", "r")
 while attempts < 6:
     print(scrm.readline())
+
     str_last_solve = input(f"Solve number {str(disp_count)} Time: ")
+    # trying to check if it is a float if not then convert it?
+    if str_last_solve.isdecimal():
+        last_solve = float(str_last_solve)
+        print("yes!")
+    while not 0<last_solve<100 or str_last_solve == "dnf":
+        print("yes")
     attempts += 1
     disp_count += 1
     # First input
