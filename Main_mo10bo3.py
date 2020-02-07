@@ -1,5 +1,7 @@
 from statistics import mean
 
+print("Hello from Iceland!")
+
 scrm = open("scrambles.txt", "r")
 
 attempts = 0
