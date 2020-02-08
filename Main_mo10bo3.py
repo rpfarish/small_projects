@@ -9,10 +9,9 @@ disp_count = 1
 solves = 0
 disp_list = []
 solve_list = []
-
-'''for var in range(1, 30):
-    print(f"30/{var} with a {30 % var} remainder")'''
-
+lower = ""
+last_solve = []
+flt_list = []
 
 class MySolve:
     def __init__(self, num=1, time=0, isdnf=False, scramble=""):
@@ -35,80 +34,96 @@ s1.solve_ip(1)
 s1.write_out()'''
 
 
-
-
 # Determines if input is a float?
-def isfloat(value):
-    try:
-        float(value)
-        return True
-    except ValueError:
-        return False
 
 
-def print_ave():
-    # TODO change attempts to solves after logic is fixed
-    print(f'Average: {mean(solve_list)} for {attempts} solves yay')
+def is_float(s):
+    result = False
+    if s.count(".") == 1:
+        if s.replace(".", "").isdigit():
+            result = True
+    return result
+
+
+def ip_num(string):
+    if is_float(string) or string.isdecimal():
+        last = float(str_solve)
+        print("this maybe gets run")
+        return last
+
+
+def is_num(string):
+    if is_float(string) or string.isdecimal():
+        return bool
+
+
+def ip_str(is_str):
+    if isinstance(is_str, str):
+        lower_case = is_str.lower()
+        return lower_case
+
+
+def append_float(num):
+    solve_list.append(num)
+    disp_list.append(num)
+
+
+def while_ip(str_slv, low, dsp_cnt):
+    while not is_num(str_slv) and not low == "dnf":
+        str_slv = input(f"Enter solve {dsp_cnt}:")
+        low = ip_str(str_slv)
+        print("print me")
+    # Returns a decimal, float or "dnf"
+    return str_slv
+
+
+def confirm():
+    return True
+
+
+def print_ave(slv):
+    flt = [float(i) for i in slv]
+    print(f'Average: {mean(flt)} for {attempts} solves yay')
 
 
 scrm = open("scrambles.txt", "r")
-while attempts < 6:
+
+while attempts < 3:
     print(scrm.readline())
+    str_solve = input(f"Enter solve {disp_count}:")
 
-    str_last_solve = input(f"Solve number {str(disp_count)} Time: ")
-    # trying to check if it is a float if not then convert it?
-    if str_last_solve.isdecimal():
-        last_solve = float(str_last_solve)
-        print("yes!")
-    while not 0<last_solve<100 or str_last_solve == "dnf":
-        print("yes")
+    lower = ip_str(str_solve)
+
+    # Prompts until user ip that Returns a decimal, float or "dnf"
+    var = while_ip(str_solve, lower, disp_count)
+
+    if is_float(str_solve):
+        last_solve = float(str_solve)
+
+    print("ok")
     attempts += 1
+    solves += 1
     disp_count += 1
-    # First input
-    if str_last_solve != "dnf":
-        last_solve = float(str_last_solve)
-        confirm = input("Are You sure?").lower()
-        solves += 1
-        # Input confirmation
-        if confirm == "no":
-            last_solve = input("Solve Time: ")
-            if str_last_solve == "dnf":
-                last_solve = float(input("Solve Time: "))
-            disp_list.append("DNF")
-            count_dnf = disp_list.count("DNF")
-            print(str(count_dnf) + "here i am")
-            solves -= 1
-        else:
-            last_solve = float(last_solve)
-        print(last_solve)
-        solve_list.append(last_solve)
-        disp_list.append(last_solve)
 
-    elif str_last_solve == "dnf":
-        confirm = input("Are You sure?").lower()
-        solves -= 1
-        if confirm == "no":
-            str_last_solve = input("New Solve Time: ")
-            if str_last_solve != "dnf":
-                last_solve = float(str_last_solve)
-                solves += 1
-                disp_list.append(last_solve)
-                solve_list.append(last_solve)
-            else:
-                # TODO do i need to add to solves
-                disp_list.append("DNF")
-                count_dnf = disp_list.count("DNF")
-                print(str(count_dnf) + " here i am")
-        else:
-            disp_list.append("DNF")
-            count_dnf = disp_list.count("DNF")
-            print(str(count_dnf) + " here i am")
-
-    #   solves -= 1
-    if attempts % 3 == 0:
+    if lower != "dnf":
+        print("This code gets run")
+        disp_list.append(var)
+        solve_list.append(var)
         print(disp_list)
-        print("Last mean of 3: " + str(mean(solve_list[-3:])) + "\n")
+        print(solve_list)
+    elif lower == "dnf":
+        disp_list.append("DNF")
+        print(disp_list)
+
+    if attempts % 3 == 0:
+        flt_list = [float(i) for i in solve_list]
+
+        print(disp_list)
+
+        print("Last mean of 3: " + str(mean(flt_list[-3:])) + "\n")
+
 # End of loop
+
 
 save = open("solves.txt", "a")
 str1 = ', '.join(str(e) for e in disp_list)
@@ -124,24 +139,23 @@ except ValueError:
     print("You got no DNFs!")
 
 print(solve_list)
-print_ave()
+print_ave(solve_list)
 # Trying to calculate accuracy
 # print(solves)
 print("Accuracy:")
-print(solves)
-print(attempts)
 print(1 - (total_dnfs / attempts))
-str2 = str(mean(solve_list))
+flt_list = [float(i) for i in solve_list]
+str2 = str(mean(flt_list))
 save.write(str1 + " Ave: " + str2 + "\n")
 save.close()
 
 # TODO Built in stats?
-# TODO data collect/store
+# TODO data collect / store
 # TODO compute data
 # TODO change last item
 # TODO compute accuracy
 # TODO print data
-# TODO saves/prints data to external .txt file
+# TODO saves / prints data to external .txt file
 # TODO prints scrambles before timer input
 # TODO how to deal with dnfs
 # TODO fix counting logic for input and checks
