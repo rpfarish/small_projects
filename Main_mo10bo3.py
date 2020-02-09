@@ -1,8 +1,9 @@
 from statistics import mean
 
-print("Hello from Iceland!")
+print("Hello from Iceland! Hello from Greenland!")
 
 scrm = open("scrambles.txt", "r")
+mo3 = open("Mo3.txt", "a")
 
 attempts = 0
 disp_count = 1
@@ -82,13 +83,12 @@ def confirm():
 
 
 def print_ave(slv):
+    '''Prints the average of a list.'''
     flt = [float(i) for i in slv]
     print(f'Average: {mean(flt)} for {attempts} solves yay')
 
 
-scrm = open("scrambles.txt", "r")
-
-while attempts < 3:
+while attempts < 6:
     print(scrm.readline())
     str_solve = input(f"Enter solve {disp_count}:")
 
@@ -117,13 +117,23 @@ while attempts < 3:
 
     if attempts % 3 == 0:
         flt_list = [float(i) for i in solve_list]
-
+        dnf_list = disp_list[-3:]
         print(disp_list)
+        if not dnf_list.count("DNF"):
+            print("Last mean of 3: " + str(mean(flt_list[-3:])) + "\n")
+            str2 = str1 = ', '.join(str(e) for e in dnf_list)
+            mo3.write(str2)
+            mo3.write(" Last mean of 3: " + str(mean(flt_list[-3:])) + "\n")
 
-        print("Last mean of 3: " + str(mean(flt_list[-3:])) + "\n")
+        else:
+            print("Last mean of 3: DNF \n")
+            str2 = str1 = ', '.join(str(e) for e in dnf_list)
+            mo3.write(str2)
+            mo3.write(" Last mean of 3: DNF \n")
+
 
 # End of loop
-
+mo3.close()
 
 save = open("solves.txt", "a")
 str1 = ', '.join(str(e) for e in disp_list)
