@@ -14,12 +14,12 @@ def print_many_new_lines():
         print_new_lines()
 
 
-# Starts a new game, either against a person or a computer
+# Function starts a new game, either against a person or a computer
 def start():
-    starting = input("Enter comp to play a computer or "
-                     "Enter other to play against another player: ").lower()
+    starting = input("Enter 'comp' to play a computer or "
+                     "Enter 'other' to play against another player: ").lower()
 
-    # Restarts a new game without needing to re-input the opponent parameter
+    # Function restarts a new game without needing to re-input the opponent parameter
     def restart():
         # Prompts user if they want to restart the game
         start_over = input("Do you want to play again?\n y or n: ").lower()
@@ -34,7 +34,7 @@ def start():
             print("Bye!")
             quit()
 
-    # Starts the game against the computer
+    # Function starts the game against the computer
     def start_comp():
         global last_game_comp
         # Initializes that the game that was selected will restart the correct version when it is restarted
@@ -45,7 +45,7 @@ def start():
         choice = ""
         # Loops until user enters a valid input
         while not confirm:
-            # Prompts a user for a choice
+            # Prompts a user for a choice and assigns it to a variable
             choice = input("Enter Rock, Paper or Scissors: ").title()
             # If the input was Rock, Paper or Scissors then it breaks out of the loop
             if choice == "Rock" or choice == "Paper" or choice == "Scissors":
@@ -54,7 +54,7 @@ def start():
             else:
                 print("Please enter a valid input")
 
-        # Generates a random number from 1 to 3
+        # Generates a random number from 1 to 3 and assigns it to a variable
         rand = random.randrange(1, 4)
         # Assigns the random number to a choice: Rock, Paper or Scissors
         if rand == 1:
@@ -84,9 +84,10 @@ def start():
         elif choice == "Scissors" and comp == "Paper":
             print("You Win!")
 
-        # After the game ends prompts user if they want to play again
+        # After game ends, call the restart function which prompts user if they want to play again
         restart()
 
+    #
     def start_player():
         global last_game_comp
         # Initializes that the game that was selected will restart the correct version when it is restarted
@@ -96,41 +97,47 @@ def start():
         confirm2 = False
         choice = ""
         choice2 = ""
+        # While confirm is (the boolean) False, it runs the loop
         while not confirm:
+            # Prompts the user for input and assigns it to a variable
             choice = input("Player 1 \nEnter Rock, Paper or Scissors: ").title()
+            # Print 2,700 new lines to prevent accidental viewing of the first player's choice
             print_many_new_lines()
+            # If the input was Rock, Paper or Scissors then it breaks out of the while loop
             if choice == "Rock" or choice == "Paper" or choice == "Scissors":
                 confirm = True
             else:
                 print("Please enter a valid input")
+        # Loops until user 2 enters a valid input
         while not confirm2:
             choice2 = input("Player 2 \nEnter Rock, Paper or Scissors: \n\n\n\n\n\n>").title()
             if choice2 == "Rock" or choice2 == "Paper" or choice2 == "Scissors":
                 confirm2 = True
             else:
                 print("Please enter a valid input")
-
+        # Prints the 2 players choices
         print(f"Player 1: {choice} Player 2: {choice2}")
 
+        # If the two players choices are equal prints that the game is a tie
         if choice == choice2:
             print("Tie!")
 
+        # Checks all the Win conditions for the game
         elif choice == "Rock" and choice2 == "Scissors":
             print("Player 1 Wins!")
-
         elif choice == "Rock" and choice2 == "Paper":
-            print("Player 1 Loses :(")
-
+            print("Player 2 Wins!")
         elif choice == "Paper" and choice2 == "Rock":
             print("Player 1 Wins!")
         elif choice == "Paper" and choice2 == "Scissors":
-            print("Player 1 Loses :(")
+            print("Player 2 Wins!")
         elif choice == "Scissors" and choice2 == "Rock":
-            print("Player 1 Loses :(")
+            print("Player 2 Wins!")
         elif choice == "Scissors" and choice2 == "Paper":
             print("Player 1 Wins!")
         restart()
 
+    # Starts the correct function based on the users input on line 19 (starting)
     if starting == "comp":
         start_comp()
     if starting == "other":
@@ -138,3 +145,4 @@ def start():
 
 
 start()
+
