@@ -1,4 +1,4 @@
-from statistics import mean
+from statistics import mean, StatisticsError
 
 print("Hello from Iceland! Hello from Greenland!")
 
@@ -14,31 +14,11 @@ lower = ""
 last_solve = []
 flt_list = []
 
-class MySolve:
-    def __init__(self, num=1, time=0, isdnf=False, scramble=""):
-        self.num = num
-        self.time = time
-        self.isdnf = isdnf
-        self.scramble = scramble
-
-    def write_out(self):
-        print(self.time, self.isdnf, self.scramble)
-
-    def solve_ip(self, num):
-        self.time, self.isdnf = input("Enter Time then If is dnf").split()
-        self.num = MySolve(self.time, self.isdnf, self.scramble)
-
-
-'''s1 = MySolve()
-s1.write_out()
-s1.solve_ip(1)
-s1.write_out()'''
-
 
 # Determines if input is a float?
-
-
 def is_float(s):
+    """Returns True if s is a float. Specifically a int with one period"""
+    print("is_float gets run")
     result = False
     if s.count(".") == 1:
         if s.replace(".", "").isdigit():
@@ -49,66 +29,90 @@ def is_float(s):
 def ip_num(string):
     if is_float(string) or string.isdecimal():
         last = float(str_solve)
-        print("this maybe gets run")
+        print("ip_num gets run")
         return last
 
 
-def is_num(string):
-    if is_float(string) or string.isdecimal():
-        return bool
+def is_num(str3):
+    """Returns True if the input str con be a float or if it is decimal
+    (a num that is not a float or is alphanumeric text or is complex)"""
+    is_number = False
+    if is_float(str3) or str3.isdecimal():
+        is_number = True
+    return is_number
 
 
+# ip_lower_str
 def ip_str(is_str):
+    """ Function returns the string.lower if the input is a string"""
+    print("ip_str gets run")
     if isinstance(is_str, str):
         lower_case = is_str.lower()
         return lower_case
 
 
 def append_float(num):
+    """Appends both the display list (cont DNFs) and
+        solve list (does not cont DNFs)"""
+    print("append_float gets run")
     solve_list.append(num)
     disp_list.append(num)
 
 
+# TODO this FUNCTION IS LKEUNLJWNVDWKJNDC! Dnf wrecks it.
 def while_ip(str_slv, low, dsp_cnt):
+    """Inputs string solve and display count. If the input is neither
+    a float or the string dnf"""
+    print('while_ip gets run')
     while not is_num(str_slv) and not low == "dnf":
         str_slv = input(f"Enter solve {dsp_cnt}:")
+        print("This prints low before ip_str" + low)
         low = ip_str(str_slv)
+        print("This prints low after ip_str" + low)
         print("print me")
+        print(type(low))
     # Returns a decimal, float or "dnf"
     return str_slv
 
 
-def confirm():
-    return True
-
-
 def print_ave(slv):
-    '''Prints the average of a list.'''
+    """Prints the average of a list. Takes a list and loops through it and each item is equal to dnf then it adds a num
+    if the num is equal the len of the list then print the Average is DNF"""
+    global total_dnfs
+    print("print total dnfs")
+    print(total_dnfs)
+    temp1 = 0
     flt = [float(i) for i in slv]
-    print(f'Average: {mean(flt)} for {attempts} solves yay')
+    print(flt)
+    try:
+        print(f'Average: {mean(flt)} for {attempts} solves yay')
+    except StatisticsError:
+        print(f'Average: DNF for {attempts} solves yay')
 
 
-while attempts < 6:
+while attempts < 3:
+    # TODO How to loop input until correct
     print(scrm.readline())
     str_solve = input(f"Enter solve {disp_count}:")
 
     lower = ip_str(str_solve)
 
     # Prompts until user ip that Returns a decimal, float or "dnf"
-    var = while_ip(str_solve, lower, disp_count)
+    # var = while_ip(str_solve, lower, disp_count)
 
     if is_float(str_solve):
         last_solve = float(str_solve)
 
-    print("ok")
+    print("in the middle of the while loop")
     attempts += 1
     solves += 1
     disp_count += 1
-
+    print("after this lower is printed")
+    print(lower)
     if lower != "dnf":
-        print("This code gets run")
-        disp_list.append(var)
-        solve_list.append(var)
+        print("when lower is not  dnf This code gets run")
+        disp_list.append(str_solve)
+        solve_list.append(str_solve)
         print(disp_list)
         print(solve_list)
     elif lower == "dnf":
@@ -116,23 +120,30 @@ while attempts < 6:
         print(disp_list)
 
     if attempts % 3 == 0:
+        # flt list is really only for the case when there where no dnfs in the last 3 solves
         flt_list = [float(i) for i in solve_list]
+        print("This prints flt_list", flt_list)
+        print(type(flt_list))
+        print(len(flt_list))
+        print(len(disp_list))
+        # need to figure out how many dnfs were in the last three solves
+        totdnf = len(disp_list[-3:])-len(flt_list)
+        print(totdnf != len(disp_list))
         dnf_list = disp_list[-3:]
         print(disp_list)
-        if not dnf_list.count("DNF"):
+        if totdnf != len(disp_list) and totdnf < 1:
             print("Last mean of 3: " + str(mean(flt_list[-3:])) + "\n")
             str2 = str1 = ', '.join(str(e) for e in dnf_list)
+            # Should have written these next 2 lines in 1
             mo3.write(str2)
             mo3.write(" Last mean of 3: " + str(mean(flt_list[-3:])) + "\n")
-
         else:
             print("Last mean of 3: DNF \n")
+            # TODO What is this doing?
             str2 = str1 = ', '.join(str(e) for e in dnf_list)
             mo3.write(str2)
             mo3.write(" Last mean of 3: DNF \n")
 
-
-# End of loop
 mo3.close()
 
 save = open("solves.txt", "a")
@@ -155,8 +166,12 @@ print_ave(solve_list)
 print("Accuracy:")
 print(1 - (total_dnfs / attempts))
 flt_list = [float(i) for i in solve_list]
-str2 = str(mean(flt_list))
-save.write(str1 + " Ave: " + str2 + "\n")
+try:
+    str2 = str(mean(flt_list))
+    save.write(str1 + " Ave: " + str2 + "\n")
+except StatisticsError:
+    save.write(str1 + " Ave: DNF" + "\n")
+
 save.close()
 
 # TODO Built in stats?
@@ -170,3 +185,6 @@ save.close()
 # TODO how to deal with dnfs
 # TODO fix counting logic for input and checks
 # TODO disp list and solve list fix
+print(is_num.__doc__)
+
+print(type(total_dnfs))
