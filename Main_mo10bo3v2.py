@@ -80,6 +80,7 @@ def while_ip(string_solve, dispcount=1):
 
 def display_mean(solves_lst):
     # TODO Figure out bo3 means and if total ave of non-dnfs is good
+    # TODO doesn't filter out dnfs
     flt = [float(i) for i in solves_lst]
     try:
         print(f'Average: {mean(flt)} for {attempts} solves yay')
@@ -98,7 +99,7 @@ def display_mean(solves_lst):
 
 solve_list.append("23")
 attempts += 1
-solve_list.append("23")
+solve_list.append("DNF")
 attempts += 1
 solve_list.append("23")
 attempts += 1
